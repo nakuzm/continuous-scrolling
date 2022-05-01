@@ -18,7 +18,6 @@
     "@angular/platform-browser": "~12.0.3",
     "@angular/platform-browser-dynamic": "~12.0.3",
     "@angular/router": "~12.0.3",
-    "@ng-bootstrap/ng-bootstrap": "^12.1.1",
     "@ngxs-labs/actions-executing": "^0.1.9",
     "@ngxs/storage-plugin": "^3.7.3",
     "@ngxs/store": "^3.7.3",
