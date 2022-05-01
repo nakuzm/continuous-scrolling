@@ -1,0 +1,14 @@
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container-fluid">
+    <a class="navbar-brand">Rick and Morty characters</a>
+  </div>
+</nav>
+<div class="characters-grid m-3">
+  <div *ngFor="let character of characters|async;">
+    <img [src]="character.image" [alt]="character.name">
+    <h5>{{character.name}}</h5>
+  </div>
+</div>
+<div class="d-flex justify-content-center my-3" *ngIf="fetchCharactersIsExecuting$|async">
+  <div class="spinner-border text-info"></div>
+</div>
