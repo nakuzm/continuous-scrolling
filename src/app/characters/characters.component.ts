@@ -32,17 +32,18 @@ export class CharactersComponent implements OnInit, OnDestroy {
     this.characters = this.store.select(CharactersState.getCharacters);
 
     merge(
-      fromEvent(window, 'scroll'),
-      this.characters.pipe(
+      fromEvent(window, 'scroll').pipe(
+        map(() => this.isUserNearBottom()),
+        distinctUntilChanged(),
+        filter((isUserNearBottom) => isUserNearBottom)
+      ),
+      this.store.select(CharactersState.getCharacters).pipe(
         first(),
         filter((characters) => !characters?.length)
       )
     )
       .pipe(
         takeUntil(this.destroyed$),
-        map(() => this.isUserNearBottom()),
-        distinctUntilChanged(),
-        filter((isUserNearBottom) => isUserNearBottom),
         tap(() => this.store.dispatch(new CharactersActions.FetchCharacters()))
       )
       .subscribe();
