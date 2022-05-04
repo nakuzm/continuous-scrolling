@@ -7,8 +7,8 @@ import { CharactersActions } from '../app-state/characters/characters.actions';
 import {
   distinctUntilChanged,
   filter,
-  first,
   map,
+  startWith,
   takeUntil,
   tap,
 } from 'rxjs/operators';
@@ -33,20 +33,14 @@ export class CharactersComponent implements OnInit, OnDestroy {
 
     merge(
       fromEvent(window, 'scroll').pipe(
+        startWith(true),
         map(() => this.isUserNearBottom()),
         distinctUntilChanged(),
-        filter((isUserNearBottom) => isUserNearBottom)
-      ),
-      this.store.select(CharactersState.getCharacters).pipe(
-        first(),
-        filter((characters) => !characters?.length)
-      )
-    )
-      .pipe(
+        filter((isUserNearBottom) => isUserNearBottom),
         takeUntil(this.destroyed$),
         tap(() => this.store.dispatch(new CharactersActions.FetchCharacters()))
       )
-      .subscribe();
+    ).subscribe();
   }
 
   ngOnInit(): void {}
